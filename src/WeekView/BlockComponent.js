@@ -40,12 +40,11 @@ const style = {
   }
 }
 
-const BlockComponent = ({ time, date, onClick, onMouseOver, height, events, increment }) => {
+const BlockComponent = ({ time, date, onClick, height, events, increment }) => {
   return (
     <div key={`${date}_${time}`} style={{ ...style.root, height: height }}>
       <button
         style={style.button}
-        // onMouseOver={() => onMouseOver({ time, date })}
         onClick={() => onClick({ time, date })}>
         {events.map((e, i) => (
           <div style={{
@@ -66,16 +65,12 @@ const BlockComponent = ({ time, date, onClick, onMouseOver, height, events, incr
   )
 }
 
-BlockComponent.defaultProps = {
-  onMouseOver: () => { }
-}
-
 BlockComponent.propTypes = {
   date: PropTypes.number,
   time: PropTypes.string,
   onClick: PropTypes.func,
   height: PropTypes.number,
-  event: PropTypes.object,
+  events: PropTypes.array,
   increment: PropTypes.number
 }
 

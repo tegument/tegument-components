@@ -1,7 +1,7 @@
 {
-  "name": "react-fabric-image-editor",
-  "version": "1.0.4",
-  "description": "Image Editor Component For React build on Fabric.js",
+  "name": "tegument-components",
+  "version": "1.0.0",
+  "description": "Tegument Build Components",
   "main": "dist/index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tegument/react-fabric-image-editor.git"
+    "url": "https://github.com/tegument/tegument-components.git"
   },
   "author": "Spencer Thornock",
   "license": "MIT",
