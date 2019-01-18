@@ -1,0 +1,51 @@
+  {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "extends": [
+      "standard",
+      "standard-react"
+    ],
+    "plugins": [
+      "babel",
+      "react"
+    ],
+    "settings": {
+      "react": {
+        "createClass": "createReactClass",
+        "pragma": "React",
+        "version": "16.3",
+        "flowVersion": "0.53"
+      },
+      "propWrapperFunctions": [
+          "forbidExtraProps",
+          { "property": "freeze", "object": "Object"},
+          { "property": "myFavoriteWrapper"}
+      ]
+    },
+    "globals": {
+      "__DEV__": false,
+      "__COVERAGE__": false,
+      "__TEST__": false
+    },
+    "rules": {
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "quotes": [2, "single"],
+      "eol-last": [1],
+      "no-mixed-requires": [0],
+      "no-underscore-dangle": [0],
+      "camelcase": [0],
+      "semi": [2,"never"],
+      "no-console": "error",
+      "no-return-await": 2
+    }
+  }
