@@ -192,10 +192,10 @@ export default compose(
     componentDidMount () {
       const { toggleViewProps } = this.props
       toggleViewProps()
-      window.addEventListener('resize', () => toggleViewProps())
+      window.addEventListener('resize', toggleViewProps.bind(this))
     },
     componentWillUnmount () {
-      window.removeEventListener('resize')
+      window.removeEventListener('resize', toggleViewProps)
     }
   }),
   pure
