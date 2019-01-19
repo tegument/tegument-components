@@ -1,12 +1,16 @@
 {
   "name": "tegument-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tegument Build Components",
   "main": "dist/index.js",
+  "watch": {
+    "transpile": "{src,test}/**/*.js"
+  },
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "start": "yarn run dev",
     "transpile": "babel src -d dist --copy-files",
+    "watch:transpile": "npm-watch",
     "test": "echo \"No tests configured\"",
     "clean": "rimraf ./dist/*",
     "prepublishOnly": "yarn run clean && yarn run transpile",
@@ -93,6 +97,8 @@
     }
   },
   "dependencies": {
-    "codecov": "^3.1.0"
+    "codecov": "^3.1.0",
+    "npm-watch": "^0.5.0",
+    "recompose": "^0.30.0"
   }
 }

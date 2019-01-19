@@ -1,2 +1,2 @@
-import WeekView from './WeekView'
-export default WeekView
+import Week from './Week'
+export default Week

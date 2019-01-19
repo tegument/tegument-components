@@ -1,27 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withStyles, css, rowHeight, border } from '../theme'
 
-const border = '1px solid #000'
-const boxSizing = 'border-box'
-
-const style = {
+const styles = theme => ({
   root: {
-    borderRight: border,
-    borderBottom: border,
+    boxSizing: theme.boxSizing,
     position: 'relative',
-    boxSizing
+    borderRight: theme.border,
+    borderBottom: theme.border
   },
   button: {
+    boxSizing: theme.boxSizing,
     fontFamily: 'arial, sans-serif',
     fontSize: '12px',
-    webkitAppearance: 'none',
+    WebkitAppearance: 'none',
     width: '100%',
     height: '100%',
     border: 0,
-    outline: 0,
-    boxSizing
+    outline: 0
   },
   event: {
+    boxSizing: theme.boxSizing,
     fontFamily: 'arial, sans-serif',
     fontSize: '10px',
     background: '#000',
@@ -32,23 +31,21 @@ const style = {
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
-    borderTop: border,
+    borderTop: theme.border,
     top: -1,
     left: 0,
-    zIndex: 100,
-    boxSizing
+    zIndex: 100
   }
-}
+})
 
-const BlockComponent = ({ time, date, onClick, height, events, increment }) => {
+const BlockComponent = ({ css, styles, time, date, onClick, height, events, increment }) => {
   return (
-    <div key={`${date}_${time}`} style={{ ...style.root, height: height }}>
+    <div {...css(styles.root)} style={{ height }}>
       <button
-        style={style.button}
+        {...css(styles.button)}
         onClick={() => onClick({ time, date })}>
         {events.map((e, i) => (
-          <div style={{
-            ...style.event,
+          <div key={`${date}_${time}_${e.name}_${i}`} {...css(styles.event)} style={{
             height: height * e.length / increment,
             background: e.background,
             color: e.color || 'white',
@@ -61,7 +58,7 @@ const BlockComponent = ({ time, date, onClick, height, events, increment }) => {
           </div>
         ))}
       </button>
-    </div >
+    </div>
   )
 }
 
@@ -74,4 +71,4 @@ BlockComponent.propTypes = {
   increment: PropTypes.number
 }
 
-export default BlockComponent
+export default withStyles(styles)(BlockComponent)

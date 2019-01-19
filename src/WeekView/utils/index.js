@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { filter } from 'lodash'
+import { days } from '../constants'
 
 export function dateToYMD (dateString) {
   var date = new Date(dateString)
@@ -50,4 +51,12 @@ export const prettyTime = time => {
 export const selectByDate = (items, d, dateProp = 'date') => {
   const date = dateToYMD(d)
   return filter(items, i => i[dateProp] === date)
+}
+
+export const getPrevDay = (d, inc) => new Date(d.setDate(d.getDate() - inc))
+export const getNextDay = (d, inc) => new Date(d.setDate(d.getDate() + inc))
+
+export const getDayOfWeek = date => {
+  if (!date) return
+  return days[date.getDay() - 1]
 }
