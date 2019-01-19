@@ -1,23 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, css, rowHeight } from '../theme'
+import { boxSizing, border } from '../theme'
 
-const styles = theme => ({
+const styles = {
   columnHeader: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRight: theme.border,
-    borderBottom: theme.border
+    borderRight: border,
+    borderBottom: border
   }
-})
+}
 
-const ColumnHeader = ({ css, styles, title }) => (
-  <div {...css(styles.columnHeader)}>
+const ColumnHeader = ({ title }) => (
+  <div style={styles.columnHeader}>
     <div>{title}</div>
   </div>
 )
 
-export default withStyles(styles)(ColumnHeader)
+export default ColumnHeader

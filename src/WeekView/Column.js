@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { range, filter } from 'lodash'
 import { dateDDMMYYY, getDayOfWeek } from './utils'
-import { withStyles, css, rowHeight } from '../theme'
+import { rowHeight, boxSizing, border } from '../theme'
 
-const styles = theme => ({
+const styles = {
   columnHeader: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRight: theme.border,
-    borderBottom: theme.border,
-    height: theme.rowHeight * 2
+    borderRight: border,
+    borderBottom: border,
+    height: rowHeight * 2
   },
   column: {
     height: '100%'
@@ -21,7 +21,7 @@ const styles = theme => ({
   blockContainer: {
 
   }
-})
+}
 
 const getColumn = (start, stop, increment) => {
   const blocks = ((stop - start) * 60) / increment
@@ -40,19 +40,19 @@ const getColumn = (start, stop, increment) => {
 }
 
 const Column = props => {
-  const { css, styles, height, width, hideHeader, date, start, stop, increment, events, renderBlock, handleBlockClick } = props
+  const { height, width, hideHeader, date, start, stop, increment, events, renderBlock, handleBlockClick } = props
   const column = getColumn(start, stop, increment)
   return (
-    <div {...css(styles.column)} style={{ width }}>
+    <div style={{ ...styles.column, width }}>
       {
         (!hideHeader && (
-          <div {...css(styles.columnHeader)}>
+          <div style={styles.columnHeader}>
             <div>{getDayOfWeek(date)}</div>
             {date && (<div>{dateDDMMYYY(date)}</div>)}
           </div>
         ))
       }
-      <div {...css(styles.blockContainer)}>
+      <div style={styles.blockContainer}>
         {
           column.map((b, idx) => renderBlock({
             key: `${b}_${idx}`,
@@ -80,4 +80,4 @@ Column.propTypes = {
   handleBlockClick: PropTypes.func
 }
 
-export default withStyles(styles)(Column)
+export default Column

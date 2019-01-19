@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, css, rowHeight, border } from '../theme'
+import { rowHeight, border, boxSizing } from '../theme'
 
-const styles = theme => ({
+const styles = {
   root: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     position: 'relative',
-    borderRight: theme.border,
-    borderBottom: theme.border
+    borderRight: border,
+    borderBottom: border
   },
   button: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     fontFamily: 'arial, sans-serif',
     fontSize: '12px',
     WebkitAppearance: 'none',
@@ -20,7 +20,7 @@ const styles = theme => ({
     outline: 0
   },
   event: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     fontFamily: 'arial, sans-serif',
     fontSize: '10px',
     background: '#000',
@@ -31,21 +31,22 @@ const styles = theme => ({
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
-    borderTop: theme.border,
+    borderTop: border,
     top: -1,
     left: 0,
     zIndex: 100
   }
-})
+}
 
-const BlockComponent = ({ css, styles, time, date, onClick, height, events, increment }) => {
+const BlockComponent = ({ time, date, onClick, height, events, increment }) => {
   return (
-    <div {...css(styles.root)} style={{ height }}>
+    <div style={{ ...styles.root, height }}>
       <button
-        {...css(styles.button)}
+        style={styles.button}
         onClick={() => onClick({ time, date })}>
         {events.map((e, i) => (
-          <div key={`${date}_${time}_${e.name}_${i}`} {...css(styles.event)} style={{
+          <div key={`${date}_${time}_${e.name}_${i}`} style={{
+            ...styles.event,
             height: height * e.length / increment,
             background: e.background,
             color: e.color || 'white',
@@ -71,4 +72,4 @@ BlockComponent.propTypes = {
   increment: PropTypes.number
 }
 
-export default withStyles(styles)(BlockComponent)
+export default BlockComponent

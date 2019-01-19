@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, css, icons } from '../theme'
-
-const styles = ({ color }) => ({
+import icons from '../theme/icons'
+const styles = {
   button: {
     display: 'flex',
     alignItems: 'center',
@@ -17,15 +16,12 @@ const styles = ({ color }) => ({
     borderRadius: 30,
     background: 'white',
     outline: 'none',
-    opacity: 0.7, /* Set transparency (for mouse-over effects on hover) */
+    opacity: 0.7,
     transition: 'opacity .2s'
-    // ':hover': {
-    //   opacity: 1
-    // }
   }
-})
+}
 
-export const IconButton = ({ styles, style, width, height, onClick, icon, noOutline, iconWidth, iconHeight }) => {
+export const IconButton = ({ style, width, height, onClick, icon, noOutline, iconWidth, iconHeight }) => {
   const iconStyle = noOutline
     ? { border: 0 }
     : {}
@@ -33,8 +29,7 @@ export const IconButton = ({ styles, style, width, height, onClick, icon, noOutl
   iconStyle.height = height
   return (
     <button
-      {...css(styles.button)}
-      style={{ ...iconStyle, ...style }}
+      style={{ ...styles.button, ...iconStyle, ...style }}
       onClick={onClick}
     >
       <img src={icon} width={iconWidth} height={iconHeight} />
@@ -53,7 +48,6 @@ IconButton.defaultProps = {
 }
 
 IconButton.propTypes = {
-  styles: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   icon: PropTypes.string,
   iconWidth: PropTypes.number,
@@ -61,4 +55,4 @@ IconButton.propTypes = {
   noOutline: PropTypes.bool
 }
 
-export default withStyles(styles)(IconButton)
+export default IconButton

@@ -1,3 +1,5 @@
+import icons from './icons'
+
 export const metrics = {
   topNav: {
     height: 80
@@ -22,5 +24,6 @@ export default {
     background: 'gray',
     primary: '#FF5A5F',
     secondary: '#00A699'
-  }
+  },
+  icons
 }

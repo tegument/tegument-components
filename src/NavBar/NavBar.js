@@ -1,14 +1,14 @@
 import React from 'react'
 import IconButton from '../IconButton'
-import { css, withStyles } from '../theme'
+import { metrics, boxShadow } from '../theme'
 import icons from '../theme/icons'
 
-const styles = theme => ({
+const styles = {
   root: {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    height: theme.metrics.bottomNav.height,
+    height: metrics.bottomNav.height,
     width: '100%',
     display: 'flex',
     flex: 1,
@@ -17,7 +17,7 @@ const styles = theme => ({
     background: 'white',
     zIndex: 1000,
     padding: 10,
-    boxShadow: theme.boxShadow
+    boxShadow: boxShadow
   },
   title: {
     flex: 1,
@@ -32,14 +32,14 @@ const styles = theme => ({
     margin: 0,
     padding: 0
   }
-})
+}
 
-export const NavBar = ({ css, styles, title, leftIcon, rightIcon, onLeftButtonClick, onRightButtonClick }) => (
-  <div {...css(styles.root)}>
-    <IconButton icon={icons[leftIcon]} {...css(styles.button)} onClick={onLeftButtonClick} />
-    <div {...css(styles.title)}>{title}</div>
-    <IconButton icon={icons[rightIcon]} {...css(styles.button)} onClick={onRightButtonClick} />
+export const NavBar = ({ title, leftIcon, rightIcon, onLeftButtonClick, onRightButtonClick }) => (
+  <div style={styles.root}>
+    <IconButton style={styles.button} icon={icons[leftIcon]} onClick={onLeftButtonClick} />
+    <div style={styles.title}>{title}</div>
+    <IconButton style={styles.button} icon={icons[rightIcon]} onClick={onRightButtonClick} />
   </div>
 )
 
-export default withStyles(styles)(NavBar)
+export default NavBar

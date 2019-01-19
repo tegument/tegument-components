@@ -14,6 +14,7 @@
     "test": "echo \"No tests configured\"",
     "clean": "rimraf ./dist/*",
     "prepublishOnly": "yarn run clean && yarn run transpile",
+    "testBuild": "yarn run prepublishOnly && cp -R ./dist ../jitsnotes-pwa/node_modules/tegument-components/",
     "build": "webpack --mode production",
     "deploy": "yarn run styleguide:build && gh-pages -d styleguide",
     "publish-demo": "npm run build && npm run deploy",

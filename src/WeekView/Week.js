@@ -4,40 +4,40 @@ import { range } from 'lodash'
 import { compose, withHandlers, withStateHandlers, pure, lifecycle } from 'recompose'
 import Block from './Block'
 import Column from './Column'
-import { withStyles, css, rowHeight, metrics } from '../theme'
+import { rowHeight, metrics, boxSizing, border } from '../theme'
 import { prettyTime, dateDDMMYYY, getNextDay, getPrevDay } from './utils'
 import NavBar from '../NavBar'
 
-const styles = theme => ({
+const styles = {
   root: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     position: 'relative',
-    paddingBottom: theme.metrics.bottomNav.height,
+    paddingBottom: metrics.bottomNav.height,
     height: '100%'
   },
   columnContainer: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     fontFamily: 'arial, sans-serif',
     fontSize: '12px',
     display: 'flex',
     flex: 1,
     flexDirection: 'row',
-    borderLeft: theme.border,
-    borderTop: theme.border,
+    borderLeft: border,
+    borderTop: border,
     textAlign: 'center',
     overflowY: 'auto',
     overflowX: 'hidden'
   },
   prefixCol: {
-    borderRight: theme.border,
-    borderBottom: theme.border,
+    borderRight: border,
+    borderBottom: border,
     position: 'relative',
-    boxSizing: theme.boxSizing,
-    height: theme.rowHeight,
-    lineHeight: `${theme.rowHeight}px`
+    boxSizing: boxSizing,
+    height: rowHeight,
+    lineHeight: `${rowHeight}px`
   },
   weekContainer: {
-    boxSizing: theme.boxSizing,
+    boxSizing: boxSizing,
     display: 'flex',
     flex: 1,
     flexDirection: 'row',
@@ -46,7 +46,7 @@ const styles = theme => ({
   weekColumnOverflow: {
     width: '100%'
   }
-})
+}
 
 let ms = 24 * 60 * 60 * 1000
 
@@ -54,8 +54,6 @@ const prefixColWidth = 75
 
 const WeekView = props => {
   const {
-    css,
-    styles,
     events,
     day,
     start,
@@ -77,20 +75,20 @@ const WeekView = props => {
   let startMs = day.getTime()
 
   return (
-    <div {...css(styles.root)} style={{ height: height || '100%', width: width || '100%' }}>
-      <div {...css(styles.columnContainer)} style={{ height: height || '100%' }}>
+    <div style={{ ...styles.root, height: height || '100%', width: width || '100%' }}>
+      <div style={{ ...styles.columnContainer, height: height || '100%' }}>
         {renderColumn({
           header: 'Time:',
           start,
           stop,
           increment,
           renderBlock: ({ time }) => (
-            <div key={time} {...css(styles.prefixCol)}>{prettyTime(time)}</div>
+            <div key={time} style={{ ...styles.prefixCol, height: rowHeight }}>{prettyTime(time)}</div>
           ),
           width: prefixColWidth
         })}
-        <div {...css(styles.weekColumnOverflow)}>
-          <div {...css(styles.weekContainer)}>
+        <div style={styles.weekColumnOverflow}>
+          <div style={styles.weekContainer}>
             {range(columns).map((c, i) => renderColumn({
               key: c,
               date: new Date(day.getTime() + ms * i),
@@ -150,7 +148,6 @@ WeekView.propTypes = {
 }
 
 export default compose(
-  withStyles(styles),
   withStateHandlers(
     props => ({
       day: new Date(),
@@ -175,7 +172,15 @@ export default compose(
     })
   ),
   withHandlers({
-    toggleViewProps: ({ responsive, setColumns, setColsPerPage, setViewType, mobileBreakPoint, mobileColumns, desktopColumns }) => () => {
+    toggleViewProps: ({
+      responsive,
+      setColumns,
+      setColsPerPage,
+      setViewType,
+      mobileBreakPoint,
+      mobileColumns,
+      desktopColumns
+    }) => () => {
       if (!responsive) return
       if (window.innerWidth < mobileBreakPoint) {
         setColumns(mobileColumns)

@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <WeekView
         width={'100%'}
-        height={400}
+        height={'100%'}
         events={events}
         responsive={true}
         mobileBreakPoint={640}
