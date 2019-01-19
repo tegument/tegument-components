@@ -11,9 +11,7 @@ import NavBar from '../NavBar'
 const styles = {
   root: {
     boxSizing: boxSizing,
-    position: 'relative',
-    paddingBottom: metrics.bottomNav.height,
-    height: '100%'
+    position: 'relative'
   },
   columnContainer: {
     boxSizing: boxSizing,
@@ -25,8 +23,8 @@ const styles = {
     borderLeft: border,
     borderTop: border,
     textAlign: 'center',
-    overflowY: 'auto',
-    overflowX: 'hidden'
+    // overflowY: 'auto',
+    // overflowX: 'hidden'
   },
   prefixCol: {
     borderRight: border,
@@ -63,20 +61,32 @@ const WeekView = props => {
     increment,
     renderBlock,
     renderColumn,
+    renderNavBar,
     handleBlockClick,
     handleMouseOver,
     prevPage,
     nextPage,
     page,
     columns,
-    viewType
+    viewType,
+    hideTopNav,
+    hideBottomNav,
+    navBarStyle
   } = props
 
   let startMs = day.getTime()
 
   return (
-    <div style={{ ...styles.root, height: height || '100%', width: width || '100%' }}>
-      <div style={{ ...styles.columnContainer, height: height || '100%' }}>
+    <div style={{ ...styles.root }}>
+      {!hideTopNav && renderNavBar({
+        style: navBarStyle,
+        title: dateDDMMYYY(day),
+        leftIcon: 'Left',
+        rightIcon: 'Right',
+        onLeftButtonClick: prevPage,
+        onRightButtonClick: nextPage
+      })}
+      <div style={{ ...styles.columnContainer }}>
         {renderColumn({
           header: 'Time:',
           start,
@@ -103,13 +113,14 @@ const WeekView = props => {
           </div>
         </div>
       </div>
-      <NavBar
-        title={dateDDMMYYY(day)}
-        leftIcon={'Left'}
-        rightIcon={'Right'}
-        onLeftButtonClick={prevPage}
-        onRightButtonClick={nextPage}
-      />
+      {!hideBottomNav && renderNavBar({
+        style: navBarStyle,
+        title: dateDDMMYYY(day),
+        leftIcon: 'Left',
+        rightIcon: 'Right',
+        onLeftButtonClick: prevPage,
+        onRightButtonClick: nextPage
+      })}
     </div>
   )
 }
@@ -122,6 +133,7 @@ WeekView.defaultProps = {
   mobileBreakPoint: 640,
   mobileColumns: 2,
   desktopColumns: 7,
+  renderNavBar: props => (<NavBar {...props} />),
   renderColumn: props => (<Column {...props} />),
   renderBlock: props => (<Block {...props} />),
   handleBlockClick: d => console.log(d)
@@ -158,14 +170,20 @@ export default compose(
     }),
     ({
       setPage: () => page => ({ page }),
-      nextPage: ({ page, colsPerPage, day }) => () => ({
-        page: page + colsPerPage,
-        day: getNextDay(day, colsPerPage)
-      }),
-      prevPage: ({ page, colsPerPage, day }) => () => ({
-        page: (page === 1) ? 1 : page - colsPerPage,
-        day: getPrevDay(day, colsPerPage)
-      }),
+      nextPage: ({ page, colsPerPage, day }) => () => {
+        window.scrollTo(0, 0)
+        return {
+          page: page + colsPerPage,
+          day: getNextDay(day, colsPerPage)
+        }
+      },
+      prevPage: ({ page, colsPerPage, day }) => () => {
+        window.scrollTo(0, 0)
+        return {
+          page: (page === 1) ? 1 : page - colsPerPage,
+          day: getPrevDay(day, colsPerPage)
+        }
+      },
       setColumns: () => columns => ({ columns }),
       setColsPerPage: () => colsPerPage => ({ colsPerPage }),
       setViewType: () => viewType => ({ viewType })

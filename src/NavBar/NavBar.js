@@ -5,9 +5,9 @@ import icons from '../theme/icons'
 
 const styles = {
   root: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
+    // position: 'absolute',
+    // bottom: 0,
+    // left: 0,
     height: metrics.bottomNav.height,
     width: '100%',
     display: 'flex',
@@ -34,11 +34,11 @@ const styles = {
   }
 }
 
-export const NavBar = ({ title, leftIcon, rightIcon, onLeftButtonClick, onRightButtonClick }) => (
-  <div style={styles.root}>
-    <IconButton style={styles.button} icon={icons[leftIcon]} onClick={onLeftButtonClick} />
+export const NavBar = ({ style, title, leftIcon, rightIcon, onLeftButtonClick, onRightButtonClick }) => (
+  <div style={{ ...styles.root, ...style }}>
+    <IconButton style={styles.button} icon={icons[leftIcon]} onClick={onLeftButtonClick} noOutline />
     <div style={styles.title}>{title}</div>
-    <IconButton style={styles.button} icon={icons[rightIcon]} onClick={onRightButtonClick} />
+    <IconButton style={styles.button} icon={icons[rightIcon]} onClick={onRightButtonClick} noOutline />
   </div>
 )
 

@@ -16,7 +16,7 @@ const styles = {
     height: rowHeight * 2
   },
   column: {
-    height: '100%'
+
   },
   blockContainer: {
 
