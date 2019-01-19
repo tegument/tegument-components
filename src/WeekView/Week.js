@@ -195,7 +195,7 @@ export default compose(
       window.addEventListener('resize', () => toggleViewProps())
     },
     componentWillUnmount () {
-      window.remoteEventListener('resize')
+      window.removeEventListener('resize')
     }
   }),
   pure
