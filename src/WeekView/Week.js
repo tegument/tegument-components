@@ -78,7 +78,7 @@ const WeekView = props => {
 
   return (
     <div {...css(styles.root)} style={{ height: height || '100%', width: width || '100%' }}>
-      <div {...css(styles.columnContainer)}>
+      <div {...css(styles.columnContainer)} style={{ height: height || '100%' }}>
         {renderColumn({
           header: 'Time:',
           start,
