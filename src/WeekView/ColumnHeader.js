@@ -20,4 +20,4 @@ const ColumnHeader = ({ css, styles, title }) => (
   </div>
 )
 
-export const withStyles(styles)(ColumnHeader)
+export default withStyles(styles)(ColumnHeader)
