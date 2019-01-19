@@ -5,7 +5,16 @@ import { events } from './constants'
 class App extends Component {
   render () {
     return (
-      <WeekView events={events} />
+      <WeekView
+        width={'100%'}
+        height={'100%'}
+        events={events}
+        responsive={true}
+        mobileBreakPoint={640}
+        desktopColumns={7}
+        mobileColumns={2}
+        handleBlockClick={block => console.log(`Selected: ${block}`)}
+      />
     )
   }
 }

@@ -35,8 +35,6 @@ export function dateAsObject (dateString) {
   }
 }
 
-export const dateDDMMYYY = date => moment(date).format('MM-DD-YYYY')
-
 export const prettyTime = time => {
   let t = time.split(':')
   if (t.length < 2) return time
@@ -47,16 +45,8 @@ export const prettyTime = time => {
   let ampm = h > 11 ? 'pm' : 'am'
   return `${(h > 12) ? h - 12 : h}:${m}${ampm}`
 }
-
-export const selectByDate = (items, d, dateProp = 'date') => {
-  const date = dateToYMD(d)
-  return filter(items, i => i[dateProp] === date)
-}
-
+export const dateDDMMYYY = date => moment(date).format('MM-DD-YYYY')
+export const selectByDate = (items, d, dateProp = 'date') => filter(items, i => i[dateProp] === dateToYMD(d))
 export const getPrevDay = (d, inc) => new Date(d.setDate(d.getDate() - inc))
 export const getNextDay = (d, inc) => new Date(d.setDate(d.getDate() + inc))
-
-export const getDayOfWeek = date => {
-  if (!date) return
-  return days[date.getDay() - 1]
-}
+export const getDayOfWeek = date => date && days[date.getDay()]

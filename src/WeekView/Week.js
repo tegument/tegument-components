@@ -77,7 +77,7 @@ const WeekView = props => {
   let startMs = day.getTime()
 
   return (
-    <div {...css(styles.root)}>
+    <div {...css(styles.root)} style={{ height: height || '100%', width: width || '100%' }}>
       <div {...css(styles.columnContainer)}>
         {renderColumn({
           header: 'Time:',
@@ -120,6 +120,10 @@ WeekView.defaultProps = {
   start: 6,
   stop: 21,
   increment: 30,
+  responsive: true,
+  mobileBreakPoint: 640,
+  mobileColumns: 2,
+  desktopColumns: 7,
   renderColumn: props => (<Column {...props} />),
   renderBlock: props => (<Block {...props} />),
   handleBlockClick: d => console.log(d)
@@ -127,6 +131,14 @@ WeekView.defaultProps = {
 
 WeekView.propTypes = {
   css: PropTypes.func,
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   styles: PropTypes.object,
   events: PropTypes.array,
   start: PropTypes.number,
@@ -162,29 +174,25 @@ export default compose(
       setViewType: () => viewType => ({ viewType })
     })
   ),
-  lifecycle({
-    componentDidMount () {
-      const { setColumns, setColsPerPage, setViewType } = this.props
-      if (window.innerWidth < 640) {
-        setColumns(1)
-        setColsPerPage(1)
+  withHandlers({
+    toggleViewProps: ({ responsive, setColumns, setColsPerPage, setViewType, mobileBreakPoint, mobileColumns, desktopColumns }) => () => {
+      if (!responsive) return
+      if (window.innerWidth < mobileBreakPoint) {
+        setColumns(mobileColumns)
+        setColsPerPage(mobileColumns)
         setViewType('day')
       } else {
-        setColumns(7)
-        setColsPerPage(7)
+        setColumns(desktopColumns)
+        setColsPerPage(desktopColumns)
         setViewType('week')
       }
-      window.addEventListener('resize', () => {
-        if (window.innerWidth < 640) {
-          setColumns(1)
-          setColsPerPage(1)
-          setViewType('day')
-        } else {
-          setColumns(7)
-          setColsPerPage(7)
-          setViewType('week')
-        }
-      })
+    }
+  }),
+  lifecycle({
+    componentDidMount () {
+      const { toggleViewProps } = this.props
+      toggleViewProps()
+      window.addEventListener('resize', () => toggleViewProps())
     },
     componentWillUnmount () {
       window.remoteEventListener('resize')

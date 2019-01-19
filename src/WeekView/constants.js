@@ -8,13 +8,13 @@ export const SATURDAY = 'Saturday'
 export const SUNDAY = 'Sunday'
 
 export const days = [
+  SUNDAY,
   MONDAY,
   TUESDAY,
   WEDNESDAY,
   THURSDAY,
   FRIDAY,
-  SATURDAY,
-  SUNDAY
+  SATURDAY
 ]
 
 export const colors = {
